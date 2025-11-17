@@ -1,0 +1,4 @@
+UVM coding questions
+1.Use field macros and print the object using the inbuit print method.
+2.Use field macros and copy the object and print the object.
+3.Use field macros and clone the object and print the object. 
