@@ -1,1 +1,152 @@
 
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+  
+  
+
+ module tb;
+initial
+  begin
+    `uvm_info("tb_top","this is info message",UVM_NONE)
+  end
+   
+ endmodule
+===============================================================================================
+
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+
+
+module tb;
+  initial
+    begin
+      #30;
+      `uvm_info("TB_TOP","this is testing",UVM_NONE)
+      $display(" uvm infor macros along with display");
+    end
+  
+endmodule 
+===============================================================================================
+
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+
+module tb;
+  int data=30;
+  
+  initial
+    begin
+      `uvm_info("tb_top",$sformatf("the value of data is %d",data),UVM_NONE)
+    end
+endmodule 
+===============================================================================================
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+
+
+module tb;
+  initial
+    begin
+      `uvm_info("tb_top","test for uvm_high verbosity level",UVM_HIGH)
+      `uvm_info("tb_top",$sformatf("the value of verbosity level is %d",uvm_top.get_report_verbosity_level()),UVM_NONE)
+      uvm_top.set_report_verbosity_level(UVM_HIGH);
+    `uvm_info("tb_top","test for uvm_high verbosity level",UVM_HIGH) 
+     
+    end
+endmodule 
+===============================================================================================
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+
+//////////////////////////////////////////////////
+class driver extends uvm_driver;
+  `uvm_component_utils(driver)
+  
+  function new(string path , uvm_component parent);
+    super.new(path, parent);
+  endfunction
+ 
+  
+  task run();
+    `uvm_info("DRV1", "Executed Driver1 Code", UVM_HIGH);
+    `uvm_info("DRV2", "Executed Driver2 Code", UVM_HIGH);
+  endtask
+  
+endclass
+
+////////////////////
+
+
+module tb;
+  
+ driver drv;
+
+  
+  
+ initial begin
+   drv = new("DRV", null);
+   drv.set_report_id_verbosity("DRV1",UVM_HIGH);
+   drv.run();
+
+    
+  end
+  
+  
+endmodule
+===============================================================================================
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+
+//////////////////////////////////////////////////
+class driver extends uvm_driver;
+  `uvm_component_utils(driver)
+  
+  function new(string path , uvm_component parent);
+    super.new(path, parent);
+  endfunction
+ 
+  
+  task run();
+    `uvm_info("DRV1", "Executed Driver1 Code", UVM_HIGH);
+    `uvm_info("DRV2", "Executed Driver2 Code", UVM_HIGH);
+  endtask
+  
+endclass
+
+//////////////////////////////////////////////////
+
+class env extends uvm_env;
+  `uvm_component_utils(env)
+  
+  function new(string path , uvm_component parent);
+    super.new(path, parent);
+  endfunction
+  
+  
+  task run();
+    `uvm_info("ENV1", "Executed ENV1 Code", UVM_HIGH);
+    `uvm_info("ENV2", "Executed ENV2 Code", UVM_HIGH);
+  endtask
+  
+endclass
+////////////////////
+
+
+module tb;
+  
+ driver drv;
+ env e;
+  
+  
+ initial begin
+   drv = new("DRV", null);
+   e   = new("ENV", null);
+  // e.set_report_verbosity_level(UVM_HIGH);
+   drv.run();
+   e.run();
+    
+  end
+  
+  
+endmodule
+===============================================================================================
